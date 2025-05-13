@@ -1,38 +1,36 @@
+
 package org.example;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+import static org.testng.Assert.assertTrue;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+public class AppTest {
+    private static WebDriver driver;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+    @BeforeTest
+    public void openBrowser() throws InterruptedException {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        Thread.sleep(2000);
+        driver.get("https://nareshpatel07.github.io/pavijenkins/");// here enter static website URL from your GITHUB
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
+    @Test
+    public void titleValidationTest(){
+        String actualTitle = driver.getTitle();
+        String expectedTitle = "Computer Science and Engineering(Data Science)";
+        Assert.assertEquals(actualTitle, expectedTitle);
+        assertTrue(true, "Title should contain 'Computer Science and Engineering(Data Science)'");
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    @AfterTest
+    public void closeBrowser() throws InterruptedException {
+        Thread.sleep(1000);
+        driver.quit();
     }
+
 }
